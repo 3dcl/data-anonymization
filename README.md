@@ -1,6 +1,17 @@
 # Data::Anonymization
 Afraid of using production data due to privacy issues? Data Anonymization is a tool that helps you build anonymized production data dumps which you can use for performance testing, security testing, debugging and development.
 
+## Java/Kotlin version
+
+Java/Kotlin version of tool supporting RDBMS databases is available with similar easy to use DSL. 
+* [Kotlin/Java Data Anonymization Tool](https://github.com/dataanon/data-anon)
+* [Kotlin Maven Sample Project](https://github.com/dataanon/dataanon-kotlin-sample)
+* [Java Maven Sample Project](https://github.com/dataanon/dataanon-java-sample)
+
+
+----------------------
+
+
 [<img src="https://secure.travis-ci.org/sunitparekh/data-anonymization.png?branch=master">](http://travis-ci.org/sunitparekh/data-anonymization)
 [<img src="https://gemnasium.com/sunitparekh/data-anonymization.png?travis">](https://gemnasium.com/sunitparekh/data-anonymization)
 [<img src="https://codeclimate.com/badge.png">](https://codeclimate.com/github/sunitparekh/data-anonymization)
@@ -70,16 +81,26 @@ Postgresql database having **composite primary key**
 
 ## Changelog
 
+#### 0.8.1 (Aug 19, 2017)
+1. Multi-threading support added by [stanislav-tyutin](https://github.com/stanislav-tyutin) using Pull Request.
+2. Fixed to work with Ruby 2.4.x, issue with Integer data type
+
+#### 0.8.0 (Oct 31, 2016)
+1. Upgraded to rails 5.x
+
+#### 0.7.4 (Oct 29, 2016)
+1. Continue to work on rails 4.x. Minor changes based on feedback.
+
 #### 0.8.0.rc1 (Sep 5, 2016)
-1. Upgraded to rails 5.0, please report any issue or use case not working. 
+1. Upgraded to rails 5.0, please report any issue or use case not working.
 
 #### 0.7.3 (Feb 5, 2016)
-1. Fixed issue with batchsize. Thanks to [Jan Raasch](https://github.com/janraasch) for sending pull request. 
+1. Fixed issue with batchsize. Thanks to [Jan Raasch](https://github.com/janraasch) for sending pull request.
 
 #### 0.7.2 (Sep 26, 2015)
 1. Upgraded MongoDB to latest gem version 2.1.0 and tested with MongoDB 3.x version.
-2. Upgraded gems to latest version 
-3. Adding limit functionality - Merge pull request #27 from yanismydj/master       
+2. Upgraded gems to latest version
+3. Adding limit functionality - Merge pull request #27 from yanismydj/master
 
 #### 0.7.1 (Jun 13, 2015)
 1. Fixed issues with empty array data for MongoDB
@@ -218,6 +239,7 @@ Read more about [blacklist and whitelist here](http://sunitspace.blogspot.in/201
 5. Make sure to give proper case for fields and table names.
 6. Use skip and continue to apply different strategies for records.
 7. Use 'limit' to limit the number of rows that will be imported in whitelist
+8. RDBMS databases utilizing schemas can be specified via `schema_search_path`: `source_db { ... schema_search_path: 'public,my_special_schema' }`
 
 ## DSL Generation
 
@@ -263,7 +285,7 @@ datanon generate_rdbms_dsl -a postgresql -h 123.456.7.8 -d production_db
 
 ```
 
-The relevant db gems must be installed so that AR has the adapters required to establish the connection to the databases. The script generates a file named **rdbms_whitelist_generated.rb** in the same location as the project.  
+The relevant db gems must be installed so that AR has the adapters required to establish the connection to the databases. The script generates a file named **rdbms_whitelist_generated.rb** in the same location as the project.
 
 ### MongoDB whitelist generation
 
@@ -368,7 +390,7 @@ has following attribute accessor
 </tr>
 <tr>
 <td align="left">Text</td>
-<td align="left"><a href="http://rubydoc.info/github/sunitparekh/data-anonymization/DataAnon/Strategy/Field/RandomUrl">RandomURL</a></td>
+<td align="left"><a href="http://rubydoc.info/github/sunitparekh/data-anonymization/DataAnon/Strategy/Field/RandomUrl">RandomUrl</a></td>
 <td align="left">Anonymizes a URL while mainting the structure</td>
 </tr>
 </table><table>
