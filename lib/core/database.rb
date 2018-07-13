@@ -61,15 +61,9 @@ module DataAnon
 
     end
 
-    class Sequential
+    class Sequential      
       def anonymize tables
-        tables.each do |table|
-          begin
-            table.process
-          rescue => e
-            logger.error "\n#{e.message} \n #{e.backtrace}"
-          end
-        end
+        tables.each { |table| table.process }
       end
     end
 
