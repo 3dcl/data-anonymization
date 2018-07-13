@@ -13,6 +13,3 @@ module DataAnon
     end
   end
 end
-
-include DataAnon::Core::DSL
-
