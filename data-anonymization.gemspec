@@ -21,7 +21,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency('activerecord', '~> 6')
   gem.add_dependency('composite_primary_keys', '~> 12.0')
-  gem.add_dependency('activesupport', '~> 5.2')
+  gem.add_dependency('activesupport', '~> 6')
   gem.add_dependency('rgeo', '~> 1.0')
   gem.add_dependency('rgeo-geojson', '>= 1.0')
   gem.add_dependency('powerbar', '~> 1.0')
