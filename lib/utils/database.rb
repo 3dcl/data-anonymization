@@ -1,58 +1,60 @@
+# frozen_string_literal: true
+
 require 'active_record'
 require 'composite_primary_keys'
 require 'logger'
 
 module DataAnon
   module Utils
-
-    class TempDatabase < ActiveRecord::Base
+    class TempDatabase < ApplicationRecord
       self.abstract_class = true
     end
 
-    class DisableReferentialIntegrityDatabase < ActiveRecord::Base
+    class DisableReferentialIntegrityDatabase < ApplicationRecord
       self.abstract_class = true
     end
 
-    class SourceDatabase < ActiveRecord::Base
+    class SourceDatabase < ApplicationRecord
       self.abstract_class = true
     end
 
-    class DestinationDatabase < ActiveRecord::Base
+    class DestinationDatabase < ApplicationRecord
       self.abstract_class = true
     end
 
     class BaseTable
-
-      def self.create_table  database, table_name, primary_keys = []
+      def self.create_table(database, table_name, primary_keys = [])
         klass_name = table_name.to_s.downcase.capitalize
-        return database.const_get klass_name if database.constants.include? klass_name.to_sym
-        database.const_set(klass_name, Class.new(database) do
-            self.table_name = table_name
-            self.primary_keys = primary_keys if primary_keys.length > 1
-            self.primary_key = primary_keys[0] if primary_keys.length == 1
-            self.primary_key = nil if primary_keys.length == 0
-            self.inheritance_column = :_type_disabled
-          end
-        )
-      end
+        if database.const_defined?(klass_name, false)
+          return database.const_get(klass_name, false)
+        end
 
+        database.const_set(klass_name, Class.new(database) do
+                                         self.table_name = table_name
+                                         if primary_keys.length > 1
+                                           self.primary_keys = primary_keys
+                                         end
+                                         if primary_keys.length == 1
+                                           self.primary_key = primary_keys[0]
+                                         end
+                                         if primary_keys.empty?
+                                           self.primary_key = nil
+                                         end
+                                         self.inheritance_column = :_type_disabled
+                                       end)
+      end
     end
 
     class SourceTable < BaseTable
-
-      def self.create table_name, primary_key = []
-        create_table  SourceDatabase, table_name, primary_key
+      def self.create(table_name, primary_key = [])
+        create_table SourceDatabase, table_name, primary_key
       end
-
     end
 
     class DestinationTable < BaseTable
-
-      def self.create table_name, primary_key = []
+      def self.create(table_name, primary_key = [])
         create_table DestinationDatabase, table_name, primary_key
       end
-
     end
-
   end
 end

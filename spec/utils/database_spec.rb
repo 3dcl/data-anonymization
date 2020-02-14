@@ -16,6 +16,12 @@ describe 'Utils' do
     album.all.length > 0
   end
 
+  it 'ignores inherited constants when creating a table with matching name' do
+    conditionals = DataAnon::Utils::SourceTable.create 'Conditionals'
+    conditionals.count.should == 0
+    conditionals.all.length == 0
+  end
+
   it 'should test the connection to destination database' do
     album = DataAnon::Utils::DestinationTable.create 'Album', ['AlbumId']
     album.count.should == 0
