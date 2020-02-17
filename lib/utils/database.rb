@@ -6,19 +6,19 @@ require 'logger'
 
 module DataAnon
   module Utils
-    class TempDatabase < ApplicationRecord
+    class TempDatabase < ::ApplicationRecord
       self.abstract_class = true
     end
 
-    class DisableReferentialIntegrityDatabase < ApplicationRecord
+    class DisableReferentialIntegrityDatabase < ::ApplicationRecord
       self.abstract_class = true
     end
 
-    class SourceDatabase < ApplicationRecord
+    class SourceDatabase < ::ApplicationRecord
       self.abstract_class = true
     end
 
-    class DestinationDatabase < ApplicationRecord
+    class DestinationDatabase < ::ApplicationRecord
       self.abstract_class = true
     end
 
